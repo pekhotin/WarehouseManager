@@ -7,25 +7,25 @@ while ($countTrucks != 0) {
 
     $trucks = explode(' ', $inputLine);
     $min = 0;
-    $tmpStack = new SplStack();
+    $stack = new SplStack();
 
     for ($i = 0; $i < count($trucks); ) {
         if ($trucks[$i] == $min + 1) {
             $min = $trucks[$i];
             $i++;
         } else {
-            if (!$tmpStack->isEmpty() && $trucks[$i] == $tmpStack->top() + 1) {
-                $min = $tmpStack->pop();
+            if (!$stack->isEmpty() && $trucks[$i] == $stack->top() + 1) {
+                $min = $stack->pop();
             } else {
-                $tmpStack->push($trucks[$i]);
+                $stack->push($trucks[$i]);
                 $i++;
             }
         }
     }
 
     $result = true;
-    while (!$tmpStack->isEmpty()) {
-        $top = $tmpStack->pop();
+    while (!$stack->isEmpty()) {
+        $top = $stack->pop();
         if ($top != $min + 1) {
             $result = false;
         } else {
