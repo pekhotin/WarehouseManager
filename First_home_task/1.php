@@ -6,18 +6,16 @@ while ($countTrucks != 0) {
     $inputLine = trim(fgets(STDIN));
 
     $trucks = explode(' ', $inputLine);
-    $mainStack = new SplStack();
+    $min = 0;
     $tmpStack = new SplStack();
 
-    $mainStack->push(0);
-
     for ($i = 0; $i < count($trucks); ) {
-        if ($trucks[$i] == $mainStack->top() + 1) {
-            $mainStack->push($trucks[$i]);
+        if ($trucks[$i] == $min + 1) {
+            $min = $trucks[$i];
             $i++;
         } else {
             if (!$tmpStack->isEmpty() && $trucks[$i] == $tmpStack->top() + 1) {
-                $mainStack->push($tmpStack->pop());
+                $min = $tmpStack->pop();
             } else {
                 $tmpStack->push($trucks[$i]);
                 $i++;
@@ -28,10 +26,10 @@ while ($countTrucks != 0) {
     $result = true;
     while (!$tmpStack->isEmpty()) {
         $top = $tmpStack->pop();
-        if ($top != $mainStack->top() + 1) {
+        if ($top != $min + 1) {
             $result = false;
         } else {
-            $mainStack->push($top);
+            $min = $top;
         }
     }
     if ($result) {
